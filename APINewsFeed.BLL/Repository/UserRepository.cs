@@ -35,19 +35,20 @@ namespace APINewsFeed.BLL.Repository
         public async Task<Guid> UserAuthorization(UserAuthorizationDTO userAuthorizationDTO)
         {
             var user = await _context.user.SingleOrDefaultAsync(u => u.name == userAuthorizationDTO.name);
-            if (user == null) return Guid.Empty;
-            if (user.password != _hasher.GetHash(userAuthorizationDTO.password)) return Guid.Empty;
+            if (user == null || user.password != _hasher.GetHash(userAuthorizationDTO.password)) 
+                return Guid.Empty;
             
             return user.id;
         }
-        public async Task<List<UserDTO>> GetUsers(GetUsersDTO getUsersDTO)
+        public async Task<List<UsersDTO>> GetUsers(GetUsersDTO getUsersDTO)
         {
             var query = _context.user.AsQueryable().AsNoTracking();
             query = query.Where(u => u.name.ToLower().Contains(getUsersDTO.name.ToLower()));
 
             query = query.Skip((getUsersDTO.pageNumber - 1) * getUsersDTO.pageSize).Take(getUsersDTO.pageSize);
-            return await query.Select(userDTO => new UserDTO
+            return await query.Select(userDTO => new UsersDTO
             {
+                id = userDTO.id,
                 name = userDTO.name,
                 email = userDTO.email
             }).ToListAsync();
@@ -56,12 +57,11 @@ namespace APINewsFeed.BLL.Repository
         {
             var user = await _context.user.SingleOrDefaultAsync(u => u.id == id);
             if (user == null) return null;
-            var response = new UserDTO
+            return new UserDTO
             {
                 name = user.name,
                 email = user.email,
             };
-            return response;
         }
         public async Task<UpdateUserDTO> UpdateUser(UpdateUserDTO updateUserDTO)
         {

@@ -1,9 +1,14 @@
 ﻿
-
 namespace APINewsFeed.BLL.DTO.UserDTOs
 {
-    public class UserDTO
+    public class UsersDTO
     {
+
+        /// <summary>
+        /// id пользователя
+        /// </summary>
+        public Guid id { get; set; }
+
         /// <summary>
         /// имя пользователя
         /// </summary>
@@ -12,5 +17,6 @@ namespace APINewsFeed.BLL.DTO.UserDTOs
         /// email пользователя
         /// </summary>
         public string email { get; set; } = "";
+
     }
 }

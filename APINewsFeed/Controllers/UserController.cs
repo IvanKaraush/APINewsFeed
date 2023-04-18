@@ -28,7 +28,7 @@ namespace APINewsFeed.Controllers
         /// </summary>
         /// <response code="400">Пользователь с таким именем не найден</response>
         [HttpGet("get")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDTO))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UsersDTO))]
         public async Task<ActionResult> GetUsers([FromQuery] GetUsersDTO getUsersDTO)
         {
             var users = await _userRepository.GetUsers(getUsersDTO);

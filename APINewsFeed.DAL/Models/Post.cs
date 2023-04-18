@@ -14,7 +14,7 @@ namespace APINewsFeed.DAL.Models
         [Required]
         public string title { get; set; } = "";
         [Required]
-        public string description { get; set; } = "";
+        public string text { get; set; } = "";
         [Required]
         public string image { get; set; } = "";
         [Required]
