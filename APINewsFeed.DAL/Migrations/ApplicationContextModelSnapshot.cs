@@ -80,6 +80,8 @@ namespace APINewsFeed.DAL.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex(new[] { "id" }, "idIndex");
+
                     b.HasIndex(new[] { "name" }, "nameIndex");
 
                     b.ToTable("Users");

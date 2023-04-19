@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <DocumentationFile>C:\Users\Igor\APINewsFeed\APINewsFeed\obj\Debug\net6.0\APINewsFeed.xml</DocumentationFile>
-	<NoWarn>CS1591</NoWarn>
+	<NoWarn>CS1591, CS8604</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

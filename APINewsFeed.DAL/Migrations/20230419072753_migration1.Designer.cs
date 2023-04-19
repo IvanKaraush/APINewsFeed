@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace APINewsFeed.DAL.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230414115422_migration1")]
+    [Migration("20230419072753_migration1")]
     partial class migration1
     {
         /// <inheritdoc />
@@ -82,6 +82,8 @@ namespace APINewsFeed.DAL.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("id");
+
+                    b.HasIndex(new[] { "id" }, "idIndex");
 
                     b.HasIndex(new[] { "name" }, "nameIndex");
 

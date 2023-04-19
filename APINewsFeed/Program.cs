@@ -7,6 +7,7 @@ using APINewsFeed.BLL.Services;
 using APINewsFeed.BLL.Validators.PostValidators;
 using APINewsFeed.BLL.Validators.UserValidators;
 using APINewsFeed.DAL.Models;
+using APINewsFeed.Middleware;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
@@ -41,7 +42,7 @@ builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSet
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IHasher, HasherService>();
-builder.Services.AddScoped<IImageService, ImageStorageService>();
+builder.Services.AddTransient<IImageService, ImageStorageService>();
 
 
 builder.Services.AddTransient<IValidator<UserRegistrationDTO>, AddUserValidatorDTO>();
@@ -72,5 +73,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseMiddleware<GetImage>();
 
 app.Run();

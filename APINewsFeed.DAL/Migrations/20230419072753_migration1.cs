@@ -64,6 +64,11 @@ namespace APINewsFeed.DAL.Migrations
                 column: "title");
 
             migrationBuilder.CreateIndex(
+                name: "idIndex",
+                table: "Users",
+                column: "id");
+
+            migrationBuilder.CreateIndex(
                 name: "nameIndex",
                 table: "Users",
                 column: "name");
