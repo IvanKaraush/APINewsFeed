@@ -17,8 +17,8 @@ namespace APINewsFeed.BLL.Repository
 
         public async Task<Guid> UserRegistration(UserRegistrationDTO userRegistrationDTO)
         {
-            var chechUser = await _context.user.SingleOrDefaultAsync(u => u.name == userRegistrationDTO.name);
-            if (chechUser != null) return Guid.Empty;
+            var checkUser = await _context.user.SingleOrDefaultAsync(u => u.name == userRegistrationDTO.name);
+            if (checkUser != null) return Guid.Empty;
 
             var user = new User
             {
