@@ -49,7 +49,7 @@ namespace APINewsFeed.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Favorite",
+                name: "Favorites",
                 columns: table => new
                 {
                     userId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -57,15 +57,15 @@ namespace APINewsFeed.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Favorite", x => new { x.userId, x.postId });
+                    table.PrimaryKey("PK_Favorites", x => new { x.userId, x.postId });
                     table.ForeignKey(
-                        name: "FK_Favorite_Posts_postId",
+                        name: "FK_Favorites_Posts_postId",
                         column: x => x.postId,
                         principalTable: "Posts",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Favorite_Users_userId",
+                        name: "FK_Favorites_Users_userId",
                         column: x => x.userId,
                         principalTable: "Users",
                         principalColumn: "id",
@@ -73,8 +73,8 @@ namespace APINewsFeed.DAL.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Favorite_postId",
-                table: "Favorite",
+                name: "IX_Favorites_postId",
+                table: "Favorites",
                 column: "postId");
 
             migrationBuilder.CreateIndex(
@@ -107,7 +107,7 @@ namespace APINewsFeed.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Favorite");
+                name: "Favorites");
 
             migrationBuilder.DropTable(
                 name: "Posts");

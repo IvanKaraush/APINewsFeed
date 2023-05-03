@@ -22,7 +22,7 @@ namespace APINewsFeed.DAL.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("APINewsFeed.DAL.Models.FavoritePosts", b =>
+            modelBuilder.Entity("APINewsFeed.DAL.Models.FavoritePost", b =>
                 {
                     b.Property<Guid>("userId")
                         .HasColumnType("uuid");
@@ -34,7 +34,7 @@ namespace APINewsFeed.DAL.Migrations
 
                     b.HasIndex("postId");
 
-                    b.ToTable("Favorite");
+                    b.ToTable("Favorites");
                 });
 
             modelBuilder.Entity("APINewsFeed.DAL.Models.Post", b =>
@@ -102,7 +102,7 @@ namespace APINewsFeed.DAL.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("APINewsFeed.DAL.Models.FavoritePosts", b =>
+            modelBuilder.Entity("APINewsFeed.DAL.Models.FavoritePost", b =>
                 {
                     b.HasOne("APINewsFeed.DAL.Models.Post", "post")
                         .WithMany("favoritePosts")

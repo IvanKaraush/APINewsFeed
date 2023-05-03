@@ -2,8 +2,8 @@
 
 namespace APINewsFeed.DAL.Models
 {
-    [Table("Favorite")]
-    public class FavoritePosts
+    [Table("Favorites")]
+    public class FavoritePost
     {
         public Guid userId { get; set; }
         public User? user { get; set; } 

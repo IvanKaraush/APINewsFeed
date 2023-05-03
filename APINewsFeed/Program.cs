@@ -1,9 +1,11 @@
 using APINewsFeed.BLL.Configuration;
+using APINewsFeed.BLL.DTO.FavoritePostDTOs;
 using APINewsFeed.BLL.DTO.PostDTOs;
 using APINewsFeed.BLL.DTO.UserDTOs;
 using APINewsFeed.BLL.Interfaces;
 using APINewsFeed.BLL.Repository;
 using APINewsFeed.BLL.Services;
+using APINewsFeed.BLL.Validators.FavoritesPostValidators;
 using APINewsFeed.BLL.Validators.PostValidators;
 using APINewsFeed.BLL.Validators.UserValidators;
 using APINewsFeed.DAL.Models;
@@ -56,6 +58,9 @@ builder.Services.AddTransient<IValidator<CreatePostDTO>, CreatePostDTOValidator>
 builder.Services.AddTransient<IValidator<GetPostByIdDTO>, GetPostByIdDTOValidator>();
 builder.Services.AddTransient<IValidator<FilterPostDTO>, FilterPostDTOValidator>();
 builder.Services.AddTransient<IValidator<GetPostsByUserIdDTO>, GetPostByUserIdDTOValidator>();
+builder.Services.AddTransient<IValidator<AddPostToFavoritesDTO>, AddPostToFavoriteDTOValidator>();
+builder.Services.AddTransient<IValidator<DeletePostFromFavoritesDTO>, DeletePostFromFavoritesDTOValidator>();
+builder.Services.AddTransient<IValidator<GetFavoritesPostsDTO>, GetFavoritesPostsDTOValidator>();
 
 
 
