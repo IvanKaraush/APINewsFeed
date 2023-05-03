@@ -45,6 +45,7 @@ builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IHasher, HasherService>();
 builder.Services.AddTransient<IImageService, ImageStorageService>();
+builder.Services.AddScoped<IFavoritesPostRepository, FavoritesPostRepository>();
 
 
 builder.Services.AddTransient<IValidator<UserRegistrationDTO>, AddUserValidatorDTO>();
