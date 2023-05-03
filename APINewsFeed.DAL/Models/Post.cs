@@ -25,5 +25,7 @@ namespace APINewsFeed.DAL.Models
         [Required]
         public Guid userId { get; set; }
         public User? user { get; set; }
+        public ICollection<FavoritePosts>? favoritePosts { get; set; }
+
     }
 }

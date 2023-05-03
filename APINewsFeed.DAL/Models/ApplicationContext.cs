@@ -16,6 +16,22 @@ namespace APINewsFeed.DAL.Models
                 .WithMany(p => p.posts)
                 .HasForeignKey(k => k.userId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+
+            modelBuilder.Entity<FavoritePosts>()
+           .HasKey(ct => new { ct.userId, ct.postId });
+
+            modelBuilder.Entity<FavoritePosts>()
+                .HasOne(ct => ct.user)
+                .WithMany(u => u.favoritePosts)
+                .HasForeignKey(ct => ct.userId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<FavoritePosts>()
+                .HasOne(ct => ct.post)
+                .WithMany(t => t.favoritePosts)
+                .HasForeignKey(ct => ct.postId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -19,5 +19,7 @@ namespace APINewsFeed.DAL.Models
         public string password { get; set; } = "";
 
         public ICollection<Post>? posts { get; set; }
+        public ICollection<FavoritePosts>? favoritePosts { get; set; }
+
     }
 }

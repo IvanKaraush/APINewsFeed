@@ -22,6 +22,21 @@ namespace APINewsFeed.DAL.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("APINewsFeed.DAL.Models.FavoritePosts", b =>
+                {
+                    b.Property<Guid>("userId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("postId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("userId", "postId");
+
+                    b.HasIndex("postId");
+
+                    b.ToTable("Favorite");
+                });
+
             modelBuilder.Entity("APINewsFeed.DAL.Models.Post", b =>
                 {
                     b.Property<Guid>("id")
@@ -87,6 +102,25 @@ namespace APINewsFeed.DAL.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("APINewsFeed.DAL.Models.FavoritePosts", b =>
+                {
+                    b.HasOne("APINewsFeed.DAL.Models.Post", "post")
+                        .WithMany("favoritePosts")
+                        .HasForeignKey("postId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("APINewsFeed.DAL.Models.User", "user")
+                        .WithMany("favoritePosts")
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("post");
+
+                    b.Navigation("user");
+                });
+
             modelBuilder.Entity("APINewsFeed.DAL.Models.Post", b =>
                 {
                     b.HasOne("APINewsFeed.DAL.Models.User", "user")
@@ -98,8 +132,15 @@ namespace APINewsFeed.DAL.Migrations
                     b.Navigation("user");
                 });
 
+            modelBuilder.Entity("APINewsFeed.DAL.Models.Post", b =>
+                {
+                    b.Navigation("favoritePosts");
+                });
+
             modelBuilder.Entity("APINewsFeed.DAL.Models.User", b =>
                 {
+                    b.Navigation("favoritePosts");
+
                     b.Navigation("posts");
                 });
 #pragma warning restore 612, 618
