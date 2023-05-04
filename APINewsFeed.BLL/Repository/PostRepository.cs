@@ -9,8 +9,8 @@ namespace APINewsFeed.BLL.Repository
 {
     public class PostRepository : IPostRepository
     {
-        private readonly ApplicationContext _context;
         private readonly IImageService _imageService;
+        private readonly ApplicationContext _context;
         private readonly AppSettings _appSettings;
         public PostRepository(ApplicationContext context, IImageService imageService, IOptions<AppSettings> appSettings)
         {
@@ -24,7 +24,7 @@ namespace APINewsFeed.BLL.Repository
             var query = _context.post.AsQueryable().AsNoTracking();
 
             query = query.Where(p => p.userId == getPostsByUserIdDTO.userId);
-            query = query.Skip((getPostsByUserIdDTO.pageNumber - 1) * getPostsByUserIdDTO.pageSize).Take(getPostsByUserIdDTO.pageSize);
+            query = query.Skip((getPostsByUserIdDTO.pageNumber - 1) * _appSettings.pageSize).Take(_appSettings.pageSize);
             return await query.Select(postDTO => new PostDTO
             {
                 id = postDTO.id,
@@ -50,7 +50,7 @@ namespace APINewsFeed.BLL.Repository
             var isDesc = filterPostDTO.desc ?? false;
             query = isDesc ? query.OrderByDescending(p => p.created) : query.OrderBy(p => p.created);
 
-            query = query.Skip((filterPostDTO.pageNumber - 1) * filterPostDTO.pageSize).Take(filterPostDTO.pageSize);
+            query = query.Skip((filterPostDTO.pageNumber - 1) * _appSettings.pageSize).Take(_appSettings.pageSize);
             return await query.Select(postDTO => new PostDTO
             {
                 id = postDTO.id,

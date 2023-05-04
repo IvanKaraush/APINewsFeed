@@ -10,14 +10,11 @@ namespace APINewsFeed.BLL.Validators.UserValidators
             RuleFor(u => u.name)
                 .NotNull()
                 .NotEmpty().WithMessage("Поле name не может быть пустым");
-                
+
             RuleFor(u => u.pageNumber)
                 .NotNull()
                 .NotEmpty().WithMessage("Поле pageNumber не может быть пустым");
-           
-            RuleFor(u => u.pageSize)
-               .NotNull()
-               .NotEmpty().WithMessage("Поле pageSize не может быть пустым");
+
         }
     }
 }

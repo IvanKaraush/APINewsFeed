@@ -18,7 +18,7 @@ namespace APINewsFeed.Controllers
         /// Получить посты из избранного
         /// </summary>
         /// <response code="200">Возвращает список постов</response>
-        /// <response code="404">Такого поста не существует</response>
+        /// <response code="404">Постов не найдено</response>
         [HttpGet("get")]
         public async Task<ActionResult> GetPost([FromQuery] GetFavoritesPostsDTO getFavoritePostsDTO)
         {

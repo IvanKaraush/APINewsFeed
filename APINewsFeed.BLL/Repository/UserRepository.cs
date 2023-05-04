@@ -1,18 +1,22 @@
-﻿using APINewsFeed.BLL.DTO.UserDTOs;
+﻿using APINewsFeed.BLL.Configuration;
+using APINewsFeed.BLL.DTO.UserDTOs;
 using APINewsFeed.BLL.Interfaces;
 using APINewsFeed.DAL.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace APINewsFeed.BLL.Repository
 {
     public class UserRepository : IUserRepository
     {
         private readonly ApplicationContext _context;
+        private readonly AppSettings _appSettings;
         private readonly IHasher _hasher;
-        public UserRepository(ApplicationContext context, IHasher hasher)
+        public UserRepository(ApplicationContext context, IHasher hasher, IOptions<AppSettings> appSettings)
         {
             _context = context;
             _hasher = hasher;
+            _appSettings = appSettings.Value;
         }
 
         public async Task<Guid> UserRegistration(UserRegistrationDTO userRegistrationDTO)
@@ -45,7 +49,7 @@ namespace APINewsFeed.BLL.Repository
             var query = _context.user.AsQueryable().AsNoTracking();
             query = query.Where(u => u.name.ToLower().Contains(getUsersDTO.name.ToLower()));
 
-            query = query.Skip((getUsersDTO.pageNumber - 1) * getUsersDTO.pageSize).Take(getUsersDTO.pageSize);
+            query = query.Skip((getUsersDTO.pageNumber - 1) * _appSettings.pageSize).Take(_appSettings.pageSize);
             return await query.Select(userDTO => new UsersDTO
             {
                 id = userDTO.id,

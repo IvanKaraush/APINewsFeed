@@ -78,6 +78,11 @@ namespace APINewsFeed.DAL.Migrations
                 column: "postId");
 
             migrationBuilder.CreateIndex(
+                name: "userIdIndex",
+                table: "Favorites",
+                column: "userId");
+
+            migrationBuilder.CreateIndex(
                 name: "createdIndex",
                 table: "Posts",
                 column: "created");

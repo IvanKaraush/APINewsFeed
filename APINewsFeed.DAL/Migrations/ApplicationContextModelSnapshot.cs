@@ -34,6 +34,8 @@ namespace APINewsFeed.DAL.Migrations
 
                     b.HasIndex("postId");
 
+                    b.HasIndex(new[] { "userId" }, "userIdIndex");
+
                     b.ToTable("Favorites");
                 });
 

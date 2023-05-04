@@ -24,9 +24,6 @@ namespace APINewsFeed.BLL.DTO.PostDTOs
         /// Номер страницы
         /// </summary>
         public int pageNumber { get; set; }
-        /// <summary>
-        /// Размер страницы
-        /// </summary>
-        public int pageSize { get; set; }
+
     }
 }

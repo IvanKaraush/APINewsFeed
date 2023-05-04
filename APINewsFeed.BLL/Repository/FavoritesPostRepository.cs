@@ -50,7 +50,7 @@ namespace APINewsFeed.BLL.Repository
             var query = _context.favoritePost.AsQueryable().AsNoTracking();
 
             query = query.Where(u => u.userId == getFavoritePostsDTO.userId).Include(p => p.post);
-            query = query.Skip((getFavoritePostsDTO.pageNumber - 1) * getFavoritePostsDTO.pageSize).Take(getFavoritePostsDTO.pageSize);
+            query = query.Skip((getFavoritePostsDTO.pageNumber - 1) * _appSettings.pageSize).Take(_appSettings.pageSize);
             
             return await query.Select(postDTO => new PostDTO
             {

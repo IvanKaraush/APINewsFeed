@@ -15,10 +15,7 @@ namespace APINewsFeed.BLL.Validators.FavoritesPostValidators
             RuleFor(p => p.pageNumber)
                 .NotNull()
                 .NotEmpty().WithMessage("Поле pageNumber не может быть пустым");
-            
-            RuleFor(p => p.pageSize)
-                .NotNull()
-                .NotEmpty().WithMessage("Поле pageSize не может быть пустым");
+
         }
     }
 }
