@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace APINewsFeed.DAL.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230504070553_migration1")]
+    [Migration("20230504091021_migration1")]
     partial class migration1
     {
         /// <inheritdoc />
@@ -24,6 +24,33 @@ namespace APINewsFeed.DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("APINewsFeed.DAL.Models.Comment", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
+
+                    b.Property<Guid>("postId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("text")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("userId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("userId");
+
+                    b.HasIndex(new[] { "postId" }, "postIdIndex");
+
+                    b.ToTable("Comments");
+                });
 
             modelBuilder.Entity("APINewsFeed.DAL.Models.FavoritePost", b =>
                 {
@@ -107,6 +134,25 @@ namespace APINewsFeed.DAL.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("APINewsFeed.DAL.Models.Comment", b =>
+                {
+                    b.HasOne("APINewsFeed.DAL.Models.Post", "post")
+                        .WithMany("Comments")
+                        .HasForeignKey("postId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("APINewsFeed.DAL.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("post");
+
+                    b.Navigation("user");
+                });
+
             modelBuilder.Entity("APINewsFeed.DAL.Models.FavoritePost", b =>
                 {
                     b.HasOne("APINewsFeed.DAL.Models.Post", "post")
@@ -139,6 +185,8 @@ namespace APINewsFeed.DAL.Migrations
 
             modelBuilder.Entity("APINewsFeed.DAL.Models.Post", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("favoritePosts");
                 });
 

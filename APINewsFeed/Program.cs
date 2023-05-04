@@ -1,10 +1,12 @@
 using APINewsFeed.BLL.Configuration;
+using APINewsFeed.BLL.DTO.CommentDTOs;
 using APINewsFeed.BLL.DTO.FavoritePostDTOs;
 using APINewsFeed.BLL.DTO.PostDTOs;
 using APINewsFeed.BLL.DTO.UserDTOs;
 using APINewsFeed.BLL.Interfaces;
 using APINewsFeed.BLL.Repository;
 using APINewsFeed.BLL.Services;
+using APINewsFeed.BLL.Validators.CommentValidators;
 using APINewsFeed.BLL.Validators.FavoritesPostValidators;
 using APINewsFeed.BLL.Validators.PostValidators;
 using APINewsFeed.BLL.Validators.UserValidators;
@@ -46,7 +48,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IHasher, HasherService>();
 builder.Services.AddTransient<IImageService, ImageStorageService>();
 builder.Services.AddScoped<IFavoritesPostRepository, FavoritesPostRepository>();
-
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 
 builder.Services.AddTransient<IValidator<UserRegistrationDTO>, AddUserValidatorDTO>();
 builder.Services.AddTransient<IValidator<UpdateUserDTO>, UpdateUserValidatorDTO>();
@@ -62,6 +64,8 @@ builder.Services.AddTransient<IValidator<GetPostsByUserIdDTO>, GetPostByUserIdDT
 builder.Services.AddTransient<IValidator<AddPostToFavoritesDTO>, AddPostToFavoriteDTOValidator>();
 builder.Services.AddTransient<IValidator<DeletePostFromFavoritesDTO>, DeletePostFromFavoritesDTOValidator>();
 builder.Services.AddTransient<IValidator<GetFavoritesPostsDTO>, GetFavoritesPostsDTOValidator>();
+builder.Services.AddTransient<IValidator<AddCommentDTO>, AddCommentDTOValidator>();
+builder.Services.AddTransient<IValidator<GetCommentsDTO>, GetCommentsDTOValidator>();
 
 
 
