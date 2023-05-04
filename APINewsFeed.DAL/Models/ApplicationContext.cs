@@ -7,6 +7,8 @@ namespace APINewsFeed.DAL.Models
         public DbSet<User> user { get; set; }
         public DbSet<Post> post { get; set; }
         public DbSet<FavoritePost> favoritePost { get; set; }
+        public DbSet<Comment> comment { get; set; }
+
 
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
@@ -33,6 +35,12 @@ namespace APINewsFeed.DAL.Models
                 .HasOne(ct => ct.post)
                 .WithMany(t => t.favoritePosts)
                 .HasForeignKey(ct => ct.postId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(c => c.post)
+                .WithMany(p => p.Comments)
+                .HasForeignKey(k => k.postId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

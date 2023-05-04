@@ -20,6 +20,6 @@ namespace APINewsFeed.DAL.Models
 
         public ICollection<Post>? posts { get; set; }
         public ICollection<FavoritePost>? favoritePosts { get; set; }
-
+        
     }
 }

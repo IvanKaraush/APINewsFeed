@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-	<NoWarn>CS1591, CS8603, CS8604, CS8618, CS8622, CS8601</NoWarn>
+	<NoWarn>CS1591, CS8603, CS8604, CS8618, CS8622, CS8601, CS8602</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
