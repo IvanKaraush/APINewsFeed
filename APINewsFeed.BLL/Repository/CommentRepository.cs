@@ -20,12 +20,13 @@ namespace APINewsFeed.BLL.Repository
         public async Task<List<CommentDTO>> GetComments(GetCommentsDTO getCommentsDTO)
         {
             var query = _context.comment.AsQueryable().AsNoTracking();
-
             query = query.Where(c => c.postId == getCommentsDTO.postId).Include(u => u.user);
-            query = query.Skip((getCommentsDTO.pageNumber - 1) * _appSettings.commentPageSize).Take(_appSettings.commentPageSize);
-            query = query.OrderBy(c => c.id);
-
-            return await query.Select(commentDTO => new CommentDTO
+            
+            return await query
+            .Skip((getCommentsDTO.pageNumber - 1) * _appSettings.commentPageSize)
+            .Take(_appSettings.commentPageSize)
+            .OrderBy(c => c.id)
+            .Select(commentDTO => new CommentDTO
             {
                 id = commentDTO.id,
                 userName = commentDTO.user.name,
@@ -47,7 +48,7 @@ namespace APINewsFeed.BLL.Repository
 
         public async Task<int?> DeleteComment(DeleteCommentDTO deleteCommentDTO)
         {
-            var postComment =  await _context.comment.FirstOrDefaultAsync(p => p.id == deleteCommentDTO.id && p.userId == deleteCommentDTO.userId);
+            var postComment =  await _context.comment.SingleOrDefaultAsync(p => p.id == deleteCommentDTO.id && p.userId == deleteCommentDTO.userId);
             if (postComment == null) return null;
 
             _context.comment.Remove(postComment);

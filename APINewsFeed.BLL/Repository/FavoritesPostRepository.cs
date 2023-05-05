@@ -37,7 +37,7 @@ namespace APINewsFeed.BLL.Repository
 
         public async Task<Guid> DeletePost(DeletePostFromFavoritesDTO deletePostFromFavorites)
         {
-            var post = await _context.favoritePost.FirstOrDefaultAsync(p => p.userId == deletePostFromFavorites.userId && p.postId == deletePostFromFavorites.postId);
+            var post = await _context.favoritePost.SingleOrDefaultAsync(p => p.userId == deletePostFromFavorites.userId && p.postId == deletePostFromFavorites.postId);
             if (post == null) return Guid.Empty;
 
             _context.favoritePost.Remove(post);
@@ -48,11 +48,12 @@ namespace APINewsFeed.BLL.Repository
         public async Task<List<PostDTO>> GetPosts(GetFavoritesPostsDTO getFavoritePostsDTO)
         {
             var query = _context.favoritePost.AsQueryable().AsNoTracking();
-
             query = query.Where(u => u.userId == getFavoritePostsDTO.userId).Include(p => p.post);
-            query = query.Skip((getFavoritePostsDTO.pageNumber - 1) * _appSettings.pageSize).Take(_appSettings.pageSize);
             
-            return await query.Select(postDTO => new PostDTO
+            return await query
+            .Skip((getFavoritePostsDTO.pageNumber - 1) * _appSettings.pageSize)
+            .Take(_appSettings.pageSize)
+            .Select(postDTO => new PostDTO
             {
                 id = postDTO.post.id,
                 title = postDTO.post.title,

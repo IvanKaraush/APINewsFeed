@@ -22,10 +22,12 @@ namespace APINewsFeed.BLL.Repository
         public async Task<List<PostDTO>> GetPostsByUserId(GetPostsByUserIdDTO getPostsByUserIdDTO)
         {
             var query = _context.post.AsQueryable().AsNoTracking();
-
             query = query.Where(p => p.userId == getPostsByUserIdDTO.userId);
-            query = query.Skip((getPostsByUserIdDTO.pageNumber - 1) * _appSettings.pageSize).Take(_appSettings.pageSize);
-            return await query.Select(postDTO => new PostDTO
+            
+            return await query
+            .Skip((getPostsByUserIdDTO.pageNumber - 1) * _appSettings.pageSize)
+            .Take(_appSettings.pageSize)
+            .Select(postDTO => new PostDTO
             {
                 id = postDTO.id,
                 title = postDTO.title,
@@ -34,10 +36,8 @@ namespace APINewsFeed.BLL.Repository
                 created = postDTO.created
             }).ToListAsync();
         }
-        public async Task<List<PostDTO>> GetPosts(FilterPostDTO filterPostDTO)
+        private IQueryable<Post> ApplyFilters(IQueryable<Post> query, FilterPostDTO filterPostDTO)
         {
-            var query = _context.post.AsQueryable().AsNoTracking();
-
             if (!string.IsNullOrEmpty(filterPostDTO.filterBy))
             {
                 query = filterPostDTO.filterBy switch
@@ -47,11 +47,24 @@ namespace APINewsFeed.BLL.Repository
                     _ => query
                 };
             }
+            return query;
+        }
+        private IQueryable<Post> ApplySort(IQueryable<Post> query, FilterPostDTO filterPostDTO)
+        {
             var isDesc = filterPostDTO.desc ?? false;
-            query = isDesc ? query.OrderByDescending(p => p.created) : query.OrderBy(p => p.created);
+            return isDesc ? query.OrderByDescending(p => p.created) : query.OrderBy(p => p.created);
+        }
+        public async Task<List<PostDTO>> GetPosts(FilterPostDTO filterPostDTO)
+        {
+            var query = _context.post.AsQueryable().AsNoTracking();
 
-            query = query.Skip((filterPostDTO.pageNumber - 1) * _appSettings.pageSize).Take(_appSettings.pageSize);
-            return await query.Select(postDTO => new PostDTO
+            query = ApplyFilters(query, filterPostDTO);
+            query = ApplySort(query, filterPostDTO);
+
+            return await query
+            .Skip((filterPostDTO.pageNumber - 1) * _appSettings.pageSize)
+            .Take(_appSettings.pageSize)
+            .Select(postDTO => new PostDTO
             {
                 id = postDTO.id,
                 title = postDTO.title,
@@ -63,7 +76,7 @@ namespace APINewsFeed.BLL.Repository
 
         public async Task<PostDTO> GetPostById(Guid id)
         {
-            var post = await _context.post.SingleOrDefaultAsync(p => p.id == id);
+            var post = await _context.post.FindAsync(id);
             if (post == null) return null;
             return new PostDTO
             {
@@ -105,7 +118,7 @@ namespace APINewsFeed.BLL.Repository
         }
         public async Task<Guid> DeletePost(Guid id)
         {
-            var post = await _context.post.SingleOrDefaultAsync(p => p.id == id);
+            var post = await _context.post.FindAsync(id);
             if (post == null) return Guid.Empty;
 
             _imageService.DeleteImage(post.image);

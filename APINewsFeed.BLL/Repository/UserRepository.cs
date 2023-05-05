@@ -21,8 +21,8 @@ namespace APINewsFeed.BLL.Repository
 
         public async Task<Guid> UserRegistration(UserRegistrationDTO userRegistrationDTO)
         {
-            var checkUser = await _context.user.SingleOrDefaultAsync(u => u.name == userRegistrationDTO.name);
-            if (checkUser != null) return Guid.Empty;
+            var existingUser = await _context.user.SingleOrDefaultAsync(u => u.name == userRegistrationDTO.name);
+            if (existingUser != null) return Guid.Empty;
 
             var user = new User
             {
@@ -49,8 +49,10 @@ namespace APINewsFeed.BLL.Repository
             var query = _context.user.AsQueryable().AsNoTracking();
             query = query.Where(u => u.name.ToLower().Contains(getUsersDTO.name.ToLower()));
 
-            query = query.Skip((getUsersDTO.pageNumber - 1) * _appSettings.pageSize).Take(_appSettings.pageSize);
-            return await query.Select(userDTO => new UsersDTO
+            return await query
+            .Skip((getUsersDTO.pageNumber - 1) * _appSettings.pageSize)
+            .Take(_appSettings.pageSize)
+            .Select(userDTO => new UsersDTO
             {
                 id = userDTO.id,
                 name = userDTO.name,
@@ -59,7 +61,7 @@ namespace APINewsFeed.BLL.Repository
         }
         public async Task<UserDTO> GetUser(Guid id)
         {
-            var user = await _context.user.SingleOrDefaultAsync(u => u.id == id);
+            var user = await _context.user.FindAsync(id);
             if (user == null) return null;
             return new UserDTO
             {
@@ -69,7 +71,7 @@ namespace APINewsFeed.BLL.Repository
         }
         public async Task<UpdateUserDTO> UpdateUser(UpdateUserDTO updateUserDTO)
         {
-            var user = await _context.user.SingleOrDefaultAsync(i => i.id == updateUserDTO.id);
+            var user = await _context.user.FindAsync(updateUserDTO.id);
             if (user == null) return null;
 
             user.name = updateUserDTO.name ?? user.name;
@@ -83,7 +85,7 @@ namespace APINewsFeed.BLL.Repository
 
         public async Task<Guid> DeleteUser(Guid id)
         {
-            var user = await _context.user.SingleOrDefaultAsync(i => i.id == id);
+            var user = await _context.user.FindAsync(id);
             if (user == null) return Guid.Empty;
 
             _context.user.Remove(user);
