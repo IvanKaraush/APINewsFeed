@@ -1,15 +1,9 @@
 using APINewsFeed.BLL.Configuration;
-using APINewsFeed.BLL.DTO.CommentDTOs;
-using APINewsFeed.BLL.DTO.FavoritePostDTOs;
 using APINewsFeed.BLL.DTO.PostDTOs;
-using APINewsFeed.BLL.DTO.UserDTOs;
 using APINewsFeed.BLL.Interfaces;
 using APINewsFeed.BLL.Repository;
 using APINewsFeed.BLL.Services;
-using APINewsFeed.BLL.Validators.CommentValidators;
-using APINewsFeed.BLL.Validators.FavoritesPostValidators;
 using APINewsFeed.BLL.Validators.PostValidators;
-using APINewsFeed.BLL.Validators.UserValidators;
 using APINewsFeed.DAL.Models;
 using APINewsFeed.Middleware;
 using FluentValidation;
@@ -50,23 +44,8 @@ builder.Services.AddTransient<IImageService, ImageStorageService>();
 builder.Services.AddScoped<IFavoritesPostRepository, FavoritesPostRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 
-builder.Services.AddTransient<IValidator<UserRegistrationDTO>, AddUserValidatorDTO>();
-builder.Services.AddTransient<IValidator<UpdateUserDTO>, UpdateUserValidatorDTO>();
-builder.Services.AddTransient<IValidator<DeleteUserDTO>, DeleteUserValidatorDTO>();
-builder.Services.AddTransient<IValidator<GetUserDTO>, GetUserValidatorDTO>();
-builder.Services.AddTransient<IValidator<UserAuthorizationDTO>, UserAuthorizationValidatorDTO>();
-builder.Services.AddTransient<IValidator<UserRegistrationDTO>, UserRegistrationsValidatorDTO>();
-builder.Services.AddTransient<IValidator<GetUsersDTO>, GetUsersValidatorDTO>();
 builder.Services.AddTransient<IValidator<CreatePostDTO>, CreatePostDTOValidator>();
-builder.Services.AddTransient<IValidator<GetPostByIdDTO>, GetPostByIdDTOValidator>();
-builder.Services.AddTransient<IValidator<FilterPostDTO>, FilterPostDTOValidator>();
-builder.Services.AddTransient<IValidator<GetPostsByUserIdDTO>, GetPostByUserIdDTOValidator>();
-builder.Services.AddTransient<IValidator<AddPostToFavoritesDTO>, AddPostToFavoriteDTOValidator>();
-builder.Services.AddTransient<IValidator<DeletePostFromFavoritesDTO>, DeletePostFromFavoritesDTOValidator>();
-builder.Services.AddTransient<IValidator<GetFavoritesPostsDTO>, GetFavoritesPostsDTOValidator>();
-builder.Services.AddTransient<IValidator<AddCommentDTO>, AddCommentDTOValidator>();
-builder.Services.AddTransient<IValidator<GetCommentsDTO>, GetCommentsDTOValidator>();
-
+builder.Services.AddTransient<IValidator<UpdatePostDTO>, UpdatePostDTOValidator>();
 
 
 var app = builder.Build();

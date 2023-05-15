@@ -8,18 +8,6 @@ namespace APINewsFeed.BLL.Validators.PostValidators
     {
         public CreatePostDTOValidator()
         {
-            RuleFor(p => p.userId)
-                .NotNull()
-                .NotEmpty().WithMessage("Поле userId не может быть пустым");
-            
-            RuleFor(p => p.title)
-                .NotNull()
-                .NotEmpty().WithMessage("Поле title не может быть пустым");
-
-            RuleFor(p => p.text)
-               .NotNull()
-               .NotEmpty().WithMessage("Поле text не может быть пустым");
-            
             RuleFor(p => p.image)
                 .NotEmpty().WithMessage("Поле image не может быть пустым")
                 .Must(IsValideImage).WithMessage("Некорректный формат файла");

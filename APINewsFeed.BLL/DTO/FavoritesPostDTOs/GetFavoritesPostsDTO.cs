@@ -1,4 +1,4 @@
-﻿
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace APINewsFeed.BLL.DTO.FavoritePostDTOs
 {
@@ -7,10 +7,12 @@ namespace APINewsFeed.BLL.DTO.FavoritePostDTOs
         /// <summary>
         /// id пользователя
         /// </summary>
+        [Required]
         public Guid userId { get; set; }
         /// <summary>
         /// номер страницы
         /// </summary>
+        [Required]
         public int pageNumber { get; set; }
 
 

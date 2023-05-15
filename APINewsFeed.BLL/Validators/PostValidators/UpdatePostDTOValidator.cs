@@ -9,9 +9,6 @@ namespace APINewsFeed.BLL.Validators.PostValidators
     {
         public UpdatePostDTOValidator()
         {
-            RuleFor(i => i.id)
-               .NotNull()
-               .NotEmpty().WithMessage("Поле id не может быть пустым");
             RuleFor(i => i.image)
                 .Must(IsImageCorrect).WithMessage("Картинка имеет некорректный формат");
         }

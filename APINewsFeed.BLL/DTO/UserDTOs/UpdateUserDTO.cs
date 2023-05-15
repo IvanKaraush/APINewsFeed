@@ -1,4 +1,5 @@
-﻿
+﻿using System.ComponentModel.DataAnnotations;
+
 namespace APINewsFeed.BLL.DTO.UserDTOs
 {
     public class UpdateUserDTO
@@ -6,6 +7,7 @@ namespace APINewsFeed.BLL.DTO.UserDTOs
         /// <summary>
         /// id пользователя
         /// </summary>
+        [Required]
         public Guid id { get; set; }
         /// <summary>
         /// имя пользователя
@@ -14,6 +16,7 @@ namespace APINewsFeed.BLL.DTO.UserDTOs
         /// <summary>
         /// email пользователя
         /// </summary>
+        [EmailAddress]
         public string? email { get; set; }
         /// <summary>
         /// пароль пользователя

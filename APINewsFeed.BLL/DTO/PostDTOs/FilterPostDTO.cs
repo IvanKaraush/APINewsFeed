@@ -1,4 +1,4 @@
-﻿
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace APINewsFeed.BLL.DTO.PostDTOs
 {
@@ -23,6 +23,7 @@ namespace APINewsFeed.BLL.DTO.PostDTOs
         /// <summary>
         /// Номер страницы
         /// </summary>
+        [Required]
         public int pageNumber { get; set; }
 
     }

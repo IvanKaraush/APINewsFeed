@@ -1,4 +1,5 @@
-﻿
+﻿using System.ComponentModel.DataAnnotations;
+
 namespace APINewsFeed.BLL.DTO.UserDTOs
 {
     public class GetUserDTO
@@ -6,6 +7,7 @@ namespace APINewsFeed.BLL.DTO.UserDTOs
         /// <summary>
         /// id пользователя
         /// </summary>
+        [Required]
         public Guid id { get; set; }
     }
 }

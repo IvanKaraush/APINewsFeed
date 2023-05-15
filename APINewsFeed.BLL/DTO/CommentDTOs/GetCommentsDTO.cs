@@ -1,4 +1,4 @@
-﻿
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace APINewsFeed.BLL.DTO.CommentDTOs
 {
@@ -7,10 +7,12 @@ namespace APINewsFeed.BLL.DTO.CommentDTOs
         /// <summary>
         /// id поста
         /// </summary>
+        [Required]
         public Guid postId { get; set; }
         /// <summary>
         /// номер страницы
         /// </summary>
+        [Required]
         public int pageNumber { get; set; }
     }
 }
