@@ -1,6 +1,7 @@
 ﻿using APINewsFeed.BLL.Configuration;
 using APINewsFeed.BLL.DTO.UserDTOs;
 using APINewsFeed.BLL.Interfaces;
+using APINewsFeed.BLL.Services;
 using APINewsFeed.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -12,11 +13,13 @@ namespace APINewsFeed.BLL.Repository
         private readonly ApplicationContext _context;
         private readonly AppSettings _appSettings;
         private readonly IHasher _hasher;
-        public UserRepository(ApplicationContext context, IHasher hasher, IOptions<AppSettings> appSettings)
+        private readonly IImageService _imageService;
+        public UserRepository(ApplicationContext context, IHasher hasher, IOptions<AppSettings> appSettings, IImageService imageService)
         {
             _context = context;
             _hasher = hasher;
             _appSettings = appSettings.Value;
+            _imageService = imageService;
         }
 
         public async Task<Guid> UserRegistration(UserRegistrationDTO userRegistrationDTO)
@@ -85,9 +88,12 @@ namespace APINewsFeed.BLL.Repository
 
         public async Task<Guid> DeleteUser(Guid id)
         {
-            var user = await _context.user.FindAsync(id);
+            var user = await _context.user.Include(p => p.posts).SingleOrDefaultAsync(u => u.id == id);
             if (user == null) return Guid.Empty;
-
+            foreach (var item in user.posts)
+            {
+                _imageService.DeleteImage(item.image);   
+            }
             _context.user.Remove(user);
             await _context.SaveChangesAsync();
             return user.id;
