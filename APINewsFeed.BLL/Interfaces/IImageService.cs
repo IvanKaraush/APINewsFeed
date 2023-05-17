@@ -8,5 +8,6 @@ namespace APINewsFeed.BLL.Interfaces
         Task<string> UpdateImage(IFormFile imageUpdate, string fileName);
         void DeleteImage(string fileName);
         Task GetImage(HttpContext context, string fileName);
+        Task ResizeImage(HttpContext context, string fileName, int width, int height);
     }
 }

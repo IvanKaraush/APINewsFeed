@@ -43,6 +43,7 @@ builder.Services.AddScoped<IHasher, HasherService>();
 builder.Services.AddTransient<IImageService, ImageStorageService>();
 builder.Services.AddScoped<IFavoritesPostRepository, FavoritesPostRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddTransient<IResizeImageService, ResizeImageService>();
 
 builder.Services.AddTransient<IValidator<CreatePostDTO>, CreatePostDTOValidator>();
 builder.Services.AddTransient<IValidator<UpdatePostDTO>, UpdatePostDTOValidator>();
