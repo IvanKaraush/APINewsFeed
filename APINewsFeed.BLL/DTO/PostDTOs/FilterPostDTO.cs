@@ -9,6 +9,10 @@ namespace APINewsFeed.BLL.DTO.PostDTOs
         /// </summary>
         public string? filterBy { get; set; }
         /// <summary>
+        /// Сортировать по (title, text, created, updated)
+        /// </summary>
+        public string sortBy { get; set; } = "";
+        /// <summary>
         /// Если true то сортирует по убыванию (по умолчанию false)
         /// </summary>
         public bool? desc { get; set; }
@@ -25,6 +29,6 @@ namespace APINewsFeed.BLL.DTO.PostDTOs
         /// </summary>
         [Required]
         public int pageNumber { get; set; }
-
+        
     }
 }

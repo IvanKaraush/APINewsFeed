@@ -8,5 +8,7 @@ namespace APINewsFeed.BLL.DTO.PostDTOs
         public string text { get; set; } = "";
         public string imageUrl { get; set; } = "";
         public DateTime created { get; set; }
+        public DateTime updated { get; set; }
+
     }
 }

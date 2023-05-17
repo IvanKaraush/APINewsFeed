@@ -52,7 +52,15 @@ namespace APINewsFeed.BLL.Repository
         private IQueryable<Post> ApplySort(IQueryable<Post> query, FilterPostDTO filterPostDTO)
         {
             var isDesc = filterPostDTO.desc ?? false;
-            return isDesc ? query.OrderByDescending(p => p.created) : query.OrderBy(p => p.created);
+            query = filterPostDTO.sortBy switch
+            {
+                "title" => isDesc ? query.OrderByDescending(p => p.title) : query.OrderBy(p => p.title),
+                "text" => isDesc ? query.OrderByDescending(p => p.text) : query.OrderBy(p => p.text),
+                "created" => isDesc ? query.OrderByDescending(p => p.created) : query.OrderBy(p => p.created),
+                "updated" => isDesc ? query.OrderByDescending(p => p.updated) : query.OrderBy(p => p.updated),
+                _ => query
+            };
+            return query;
         }
         public async Task<List<PostDTO>> GetPosts(FilterPostDTO filterPostDTO)
         {
@@ -70,7 +78,8 @@ namespace APINewsFeed.BLL.Repository
                 title = postDTO.title,
                 text = postDTO.text,
                 imageUrl = _appSettings.URL + postDTO.image,
-                created = postDTO.created
+                created = postDTO.created,
+                updated = postDTO.updated
             }).ToListAsync();
         }
 
